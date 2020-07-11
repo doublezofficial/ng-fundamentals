@@ -1,15 +1,21 @@
-import { Component } from '@angular/core';
+import { ToastrService } from './../common/toastr.service';
+import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'event-list',
   template: `
    <div>
   <h1>Upcoming Angular Events</h1>
   <hr />
-  <event-thumbnail [event]=event1  ></event-thumbnail>
+  <event-thumbnail (click)="handleThumbnailClick(event1.name)" [event]=event1 ></event-thumbnail>
   </div>
   `,
 })
-export class EventListComponent {
+export class EventListComponent implements OnInit{
+  constructor(private toastr:ToastrService){
+
+  }
+  ngOnInit() {
+  }
   event1 = {
     id: 1,
     name: 'Angular Connect',
@@ -23,4 +29,8 @@ export class EventListComponent {
       country: 'India',
     },
   };
+
+  handleThumbnailClick(eventName){
+    this.toastr.success(eventName);
+  }
 }
